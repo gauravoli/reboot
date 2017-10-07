@@ -2,7 +2,10 @@ package com.reboot.admin.model;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class CommonModel {
+	@ApiModelProperty(hidden=true)
 	private String Created_By;
 	private Date Created_Date;
 	private String Updated_By;
