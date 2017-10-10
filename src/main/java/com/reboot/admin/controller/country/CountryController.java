@@ -2,11 +2,15 @@ package com.reboot.admin.controller.country;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +26,9 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/admin/country")
 @Api(value = "Country Controller", description = "Get list of country, insert, update & delete operations")
 public class CountryController {
-
+	
+	private static final Logger LOG = Logger.getLogger(CountryController.class);
+	
 	@Autowired
 	protected CountryService service;
 
@@ -46,4 +52,20 @@ public class CountryController {
 	public ResponseEntity<Country> getCountryId(@PathVariable String country) {
 		return null;
 	}
+	
+	
+	@ApiOperation(value = "Save Country objecct", response = Country.class)
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Successfully saved country"),
+			@ApiResponse(code = 400, message = "Bad Request") })
+	@PostMapping
+	public ResponseEntity<Country> saveCountry(@RequestBody Country country) {
+		country.setId(service.saveCountryService(country.getName()));
+		if(country.getId() != 0) {
+			return new ResponseEntity<>(country, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

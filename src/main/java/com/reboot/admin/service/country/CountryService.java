@@ -18,4 +18,7 @@ public class CountryService {
 		return countryDao.getCountriesFromDB();
 	}
 	
+	public long saveCountryService(String name) {
+		return countryDao.saveCountryToDB(name);
+	}
 }
