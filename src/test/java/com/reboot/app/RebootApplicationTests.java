@@ -30,7 +30,6 @@ public class RebootApplicationTests {
 		assertEquals("Canada", countries.get(0).getName());
 	}
 	
-	
 
 	
 

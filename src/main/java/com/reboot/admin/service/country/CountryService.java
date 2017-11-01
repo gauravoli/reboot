@@ -21,4 +21,12 @@ public class CountryService {
 	public long saveCountryService(String name) {
 		return countryDao.saveCountryToDB(name);
 	}
+	
+	public int updateCountryService(String name, long id) {
+		return countryDao.updateCountryToDB(name, id);
+	}
+	
+	public int deleteCountryService(String name) {
+		return countryDao.deleteCountryFromDB(name);
+	}
 }

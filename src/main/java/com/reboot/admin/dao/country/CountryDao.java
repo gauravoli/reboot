@@ -47,5 +47,14 @@ public class CountryDao {
 	    	    keyHolder);
 	    	return (Long) keyHolder.getKey();
 	}
+	
+	public int updateCountryToDB(String name, long id) {		
+		return jdbcTemplate.update("UPDATE COUNTRY SET NAME = ?, CREATED_BY = ?, UPDATED_BY = ? WHERE ID = ?", name, "Varsha", "Varsha", id);
+	}
+	
+	public int deleteCountryFromDB(String name) {		
+		return jdbcTemplate.update("DELETE FROM COUNTRY WHERE NAME = ?", name);
+	}
+	
 
 }

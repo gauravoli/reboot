@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,5 +68,34 @@ public class CountryController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@ApiOperation(value = "Update Country objecct", response = Country.class)
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Successfully updated country"),
+			@ApiResponse(code = 400, message = "Bad Request") })
+	@PutMapping
+	public ResponseEntity<Country> updateCountry(@RequestBody Country country) {
+		int isUpdated = service.updateCountryService(country.getName(), country.getId());
+		if(isUpdated == 1) {
+			return new ResponseEntity<>(country, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@ApiOperation(value = "Delete Country objecct", response = String.class)
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Successfully deleted country"),
+			@ApiResponse(code = 400, message = "Bad Request") })
+	@DeleteMapping("/{name}")
+	public ResponseEntity<String> deleteCountry(@PathVariable String name) {
+		int isUpdated = service.deleteCountryService(name);
+		if(isUpdated == 1) {
+			return new ResponseEntity<>("Country Deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	
 }
